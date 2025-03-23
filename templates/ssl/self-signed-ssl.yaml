@@ -1,0 +1,18 @@
+id: self-signed-ssl
+
+info:
+  name: Self-Signed SSL Certificate Check
+  author: Project
+  severity: medium
+  description: |
+    Detects if a domain is using a self-signed SSL certificate.
+  tags: ssl,tls,self-signed,security
+
+ssl:
+  - path:
+      - "{{BaseURL}}"
+    
+    matchers:
+      - type: ssl
+        ssl:
+          - "self_signed"
