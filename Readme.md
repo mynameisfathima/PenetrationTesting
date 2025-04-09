@@ -37,3 +37,9 @@ Test Case 1
 python3 main.py https://google.com templates/http
 <small>
 ---
+
+
+TODO : DMARC - DNS 
+TODO : DKIM - DNS
+TODO : Rua - DNS
+TODO : ruf  - DNS

@@ -113,7 +113,7 @@ def main():
     }
 
     # Generate HTML report with the scan_results
-    generate_html_report(data, "scan_report.html")
-    convert_html_to_pdf("scan_report.html", "scan_report.pdf")
+    # generate_html_report(data, "scan_report.html")
+    # convert_html_to_pdf("scan_report.html", "scan_report.pdf")
 if __name__ == "__main__":
     main()
