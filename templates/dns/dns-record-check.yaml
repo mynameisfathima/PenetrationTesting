@@ -1,17 +1,19 @@
-id: dns-record-check
+id: dkim-detection
 
 info:
-  name: DNS Record Check
-  author: AliceW
-  severity: medium
-  description: |
-    Check if specific DNS records (A, MX, TXT) are present for a domain.
-  tags: dns,records,misconfiguration
+  name: DKIM Record Detection
+  severity: info
+  classification:
+    cwe-id: CWE-200
+  metadata:
+    max-request: 1
+  tags: dns,dkim,email,security
 
 dns:
-  - type: a
-    name: "{{BaseURL}}"
-    matchers:
-      - type: value
-        value: "192.168.0.1"
+  - name: "default._domainkey.{{BaseURL}}"
+    type: TXT
 
+    matchers:
+      - type: word
+        words:
+          - "v=DKIM1"
