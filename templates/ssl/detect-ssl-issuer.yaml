@@ -1,0 +1,16 @@
+id: ssl-issuer
+
+info:
+  name: Check if SSL present 
+  author: DanBrown47
+  severity: high
+  description: |
+    Check if the domain have SSL certificate installed.
+  tags: ssl,tls
+
+ssl:
+  - path:
+      - "{{BaseURL}}"
+
+    matchers:
+      - type: generic_ssl

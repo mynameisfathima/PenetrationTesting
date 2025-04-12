@@ -1,0 +1,19 @@
+id: ssl-expiry
+
+info:
+  name: SSL Certificate Expiry Check
+  author: project
+  severity: high
+  description: |
+    Checks the expiration date of an SSL certificate to determine if it is still valid.
+  tags: ssl,tls,certificate,expiry
+
+ssl:
+  - path:
+      - "{{BaseURL}}"
+    
+    
+    matchers:
+      - type: ssl
+        ssl:
+          - "not_expired"

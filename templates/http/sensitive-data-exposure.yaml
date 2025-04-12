@@ -1,0 +1,24 @@
+id: sensitive-data-exposure-test
+info:
+  name: Sensitive Data Exposure Vulnerability Test
+  description: Test for sensitive data exposure in profile pages.
+  severity: Critical
+  author: Project
+  tags:
+    - data
+    - exposure
+    - privacy
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/profile"
+    headers:
+      User-Agent: Sensitive-Data-Exposure-Scanner
+    matchers:
+      - type: word
+        words:
+          - "password="
+          - "token="
+          - "session="
+        condition: or

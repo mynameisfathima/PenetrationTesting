@@ -1,7 +1,7 @@
 id: check-route-root
 
 info:
-  name: Script to check if HTTP Page of Google at 8.8.8.8 is available
+  name: Script to check if HTTP Page is available
   author: DanBrown47
   severity: none
   description: Script will send a HTTP request to 8.8.8.8 to see if network is available

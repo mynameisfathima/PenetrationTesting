@@ -1,0 +1,19 @@
+id: dkim-detection
+
+info:
+  name: DKIM Record Detection
+  severity: info
+  classification:
+    cwe-id: CWE-200
+  metadata:
+    max-request: 1
+  tags: dns,dkim,email,security
+
+dns:
+  - name: "default._domainkey.{{BaseURL}}"
+    type: TXT
+
+    matchers:
+      - type: word
+        words:
+          - "v=DKIM1"

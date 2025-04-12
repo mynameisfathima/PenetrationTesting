@@ -1,0 +1,23 @@
+id: broken-access-control-test
+info:
+  name: Broken Access Control Vulnerability Test for WordPress Websites
+  description: Test for broken access control to see if a wordpress website have exposed wp-admin directory
+  severity: Critical
+  author: Project
+  tags:
+    - access
+    - control
+    - security
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/wp-admin"
+    headers:
+      User-Agent: Access-Control-Tester
+    matchers:
+      - type: word
+        words:
+          - "Username"
+          - "Password"
+        condition: or

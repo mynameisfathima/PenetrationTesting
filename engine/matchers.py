@@ -31,6 +31,7 @@ def header_search(response, matcher):
     headers = dict(response.headers)
     stuff_to_match = matcher['name']
     condition_type = matcher['condition'] # Either Present or Contains
+
     if condition_type == 'present':
         if stuff_to_match in headers:
             return True
@@ -46,25 +47,46 @@ def header_search(response, matcher):
                 return False
         else:
             return False
-    
+
 def regex_match(response: Response, matcher: Dict[str, Any]) -> bool:
     """
     Checks if the response body matches a given regex pattern.
     """
-    pattern = matcher.get("pattern")
-    if not pattern:
+    patterns = matcher.get("pattern", [])
+    condition = matcher.get("condition", "or").lower()
+
+    if not patterns or not isinstance(patterns, list):
         return False
-    return bool(re.search(pattern, response.text))
+    
+    pool_of_response_text = response.text
+    if condition == "and":
+        return all(bool(re.search(pattern, pool_of_response_text)) for pattern in patterns)
+    elif condition == "or":
+        return any(bool(re.search(pattern, pool_of_response_text)) for pattern in patterns)
 
 def word_match(response: Response, matcher: Dict[str, Any]) -> bool:
+    """ 
+    Checks if the response body contains the specified words.
     """
-    Checks if th respose body contains the word
-    """
-    word_to_search = matcher.get("word")
-    if not word_to_search:
+    words_to_search = matcher.get("words", [])
+    condition = matcher.get("condition", "or").lower()
+
+    # Validate that `words_to_search` contains strings
+    words_to_search = [str(word) for word in words_to_search if isinstance(word, (str, int, float))]
+
+    # Return False if no valid words are available
+    if not words_to_search:
         return False
+
     pool_of_response_text = response.text
-    return bool(pool_of_response_text.find(word_to_search) > 0) # returns false if not found, ie, returns -1
+
+    # Check based on the specified condition
+    if condition == "and":
+        return all(word in pool_of_response_text for word in words_to_search)
+    elif condition == "or":
+        return any(word in pool_of_response_text for word in words_to_search)
+    else:
+        return False  # Default case if an unknown condition is provided
 
 
 def status_match(response: Response, matcher: Dict[str, Any]) -> bool:
@@ -73,6 +95,5 @@ def status_match(response: Response, matcher: Dict[str, Any]) -> bool:
     """
     statuses = matcher.get("status", [])
     return response.status_code in statuses
-
 
 

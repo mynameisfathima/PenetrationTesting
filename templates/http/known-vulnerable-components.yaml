@@ -1,0 +1,22 @@
+id: known-vulnerable-components-test
+info:
+  name: Components with Known Vulnerabilities Test
+  description: Test for vulnerable components by checking versions.
+  severity: High
+  author: Project
+  tags:
+    - components
+    - vulnerabilities
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/version"
+    headers:
+      User-Agent: Vulnerability-Scanner
+    matchers:
+      - type: word
+        words:
+          - "CVE"
+          - "version"
+        condition: or

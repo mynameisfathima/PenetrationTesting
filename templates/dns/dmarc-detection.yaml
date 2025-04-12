@@ -1,0 +1,19 @@
+id: dmarc-detection
+
+info:
+  name: DMARC Record Detection
+  severity: info
+  classification:
+    cwe-id: CWE-200
+  metadata:
+    max-request: 1
+  tags: dns,dmarc,email,security,spf
+
+dns:
+  - name: "_dmarc.{{BaseURL}}"
+    type: TXT
+
+    matchers:
+      - type: word
+        words:
+          - "v=DMARC1"

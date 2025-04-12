@@ -1,0 +1,23 @@
+id: insufficient-logging-monitoring-test
+info:
+  name: Insufficient Logging & Monitoring Vulnerability Test
+  description: Test for missing or insufficient logging and monitoring.
+  severity: High
+  author: Project
+  tags:
+    - logging
+    - monitoring
+    - security
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/admin/logs"
+    headers:
+      User-Agent: Logging-Monitoring-Scanner
+    matchers:
+      - type: word
+        words:
+          - "error"
+          - "log"
+        condition: or

